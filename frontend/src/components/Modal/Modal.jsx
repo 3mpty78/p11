@@ -2,6 +2,7 @@ import { useState } from "react";
 import Field from "./Field";
 import profilIcon from "../../../public/img/profil-icon.svg";
 import styles from "./modal.module.css";
+import { Link } from "react-router-dom";
 
 const Modal = () => {
     const [email, setEmail] = useState("");
@@ -44,6 +45,9 @@ const Modal = () => {
                     </div>
                     <button type="submit">Sign In</button>
                 </form>
+                <Link to={"/user"} target="_top">
+                    Letsgo
+                </Link>
             </div>
         </section>
     );

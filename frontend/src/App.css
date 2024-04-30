@@ -25,3 +25,47 @@ section.features {
         }
     }
 }
+section.bankAccounts {
+    background: #12002b;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 20px 125px 0 125px;
+
+    h1 {
+        font-size: 32px;
+        text-align: center;
+        color: white;
+    }
+
+    button {
+        background: #00bc77;
+        border-color: #00bc77;
+        color: white;
+        font-weight: bold;
+        padding: 10px;
+    }
+
+    .bankCard {
+        width: 100%;
+        background: white;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h2 {
+            font-size: 40px;
+        }
+
+        button {
+            background: #00bc77;
+            border-color: #00bc77;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+    }
+}
