@@ -1,0 +1,27 @@
+section.features {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    article {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px;
+        gap: 20px;
+        text-align: center;
+
+        img {
+            width: 152px;
+            height: 152px;
+            border-radius: 100%;
+            border: 10px solid #00bc77;
+            padding: 16px;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+    }
+}

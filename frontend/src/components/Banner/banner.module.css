@@ -1,0 +1,34 @@
+.banner {
+    width: 100%;
+    height: 400px;
+    background: url("../../../../designs/img/bank-tree.jpeg") no-repeat
+        center/cover;
+    background-position: 0% 33%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 82px;
+
+    .quote {
+        min-width: 364px;
+        background-color: white;
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .row {
+            font-weight: bold;
+            font-size: 24px;
+
+            p {
+                width: 100%;
+            }
+
+            &:nth-of-type(2) {
+                font-weight: normal;
+                font-size: 19px;
+            }
+        }
+    }
+}
