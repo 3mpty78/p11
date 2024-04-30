@@ -5,9 +5,7 @@ const SignIn = () => {
     return (
         <>
             <Layout>
-                <section>
-                    <Modal />
-                </section>
+                <Modal />
             </Layout>
         </>
     );

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Field from "./Field";
+import profilIcon from "../../../public/img/profil-icon.svg";
+import styles from "./modal.module.css";
 
 const Modal = () => {
     const [email, setEmail] = useState("");
@@ -17,24 +19,33 @@ const Modal = () => {
     const handleSubmit = () => null;
 
     return (
-        <div>
-            <div className="heading">
-                <img src="" alt="" />
-                <h2>Sign In</h2>
+        <section className={styles.container}>
+            <div className={styles.modal}>
+                <div className={styles.heading}>
+                    <img src={profilIcon} alt="Profil icon" />
+                    <h2>Sign In</h2>
+                </div>
+                <form onSubmit={handleSubmit}>
+                    <Field
+                        title={"username"}
+                        value={email}
+                        onChange={handleEmail}
+                        classname={styles.field}
+                    />
+                    <Field
+                        title={"password"}
+                        value={password}
+                        onChange={handlePassword}
+                        classname={styles.field}
+                    />
+                    <div className={styles.remember}>
+                        <input type="checkbox" id="remember" />
+                        <label htmlFor="remember">Remember me</label>
+                    </div>
+                    <button type="submit">Sign In</button>
+                </form>
             </div>
-            <form onSubmit={handleSubmit}>
-                <Field title={"email"} value={email} onChange={handleEmail} />
-                <Field
-                    title={"password"}
-                    value={password}
-                    onChange={handlePassword}
-                />
-            </form>
-            <div className="remember">
-                <input type="checkbox" id="remember" />
-                <label htmlFor="remember">Remember me</label>
-            </div>
-        </div>
+        </section>
     );
 };
 
