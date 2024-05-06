@@ -2,7 +2,8 @@ import BankAccountCard from "../components/BankAccountCard/BankAccountCard";
 import Layout from "../components/Layout";
 
 const userData = {
-    name: "Tony Jarvis",
+    firstName: "Tony",
+    lastName: "Jarvis",
     accounts: [
         {
             title: "Checking (x8349)",
@@ -33,7 +34,7 @@ const User = () => {
             <section className="bankAccounts">
                 <h1>
                     Welcome back <br />
-                    {userData.name}!
+                    {`${userData.firstName} ${userData.lastName}`}!
                 </h1>
                 <button>Edit name</button>
                 {userData.accounts.map((account, idx) => (

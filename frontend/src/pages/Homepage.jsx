@@ -1,7 +1,7 @@
 import "../App.css";
 import Banner from "../components/Banner/Banner";
 import FeatureCard from "../components/Features/FeatureCard";
-import data from "../../public/featuresData.json";
+import data from "/src/featuresData.json";
 import Layout from "../components/Layout";
 
 function Homepage() {
