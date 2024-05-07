@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { loginUser } from "../../redux/actions";
-import Field from "./Field";
-import profilIcon from "../../../public/img/profil-icon.svg";
-import styles from "./modal.module.css";
 import { Link } from "react-router-dom";
+import Field from "./Field";
+import styles from "./modal.module.css";
+import profilIcon from "/img/profil-icon.svg";
 
 const Modal = () => {
-    const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -20,27 +17,6 @@ const Modal = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await fetch(
-                "http://localhost:3001/api/v1/user/login",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ email, password }),
-                }
-            );
-            if (!response.ok) {
-                throw new Error("Erreur lors de la connexion.");
-            }
-            const responseData = await response.json();
-            const { token } = responseData.body;
-            dispatch(loginUser({ user: { email, password }, token }));
-            console.log(`Logged in as : ${email}, ${password}`);
-        } catch (error) {
-            console.error("Erreur de connexion :", error);
-        }
     };
 
     return (

@@ -29,12 +29,13 @@ const User = () => {
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Ajouter la virgule pour la séparation des milliers
         return parts.join("."); // Joindre les parties entière et décimale
     };
+
     return (
         <Layout>
             <section className="bankAccounts">
                 <h1>
                     Welcome back <br />
-                    {`${userData.firstName} ${userData.lastName}`}!
+                    {`${userData.firstName}`}!
                 </h1>
                 <button>Edit name</button>
                 {userData.accounts.map((account, idx) => (
