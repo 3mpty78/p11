@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signInUser } from "../../redux/slices/loginSlice";
 import Field from "./Field";
 import styles from "./modal.module.css";
 import profilIcon from "/img/profil-icon.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { signInUser } from "../../redux/slices/loginSlice";
 
 const Modal = () => {
     const [email, setEmail] = useState("");
