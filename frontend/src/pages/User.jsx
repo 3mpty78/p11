@@ -1,51 +1,66 @@
+import { useDispatch, useSelector } from "react-redux";
 import BankAccountCard from "../components/BankAccountCard/BankAccountCard";
 import Layout from "../components/Layout";
-
-const userData = {
-    firstName: "Tony",
-    lastName: "Jarvis",
-    accounts: [
-        {
-            title: "Checking (x8349)",
-            amount: 2082.79,
-            balance: "Available Balance",
-        },
-        {
-            title: "Savings (x6712)",
-            amount: 10928.42,
-            balance: "Available Balance",
-        },
-        {
-            title: "Credit Card (x8349)",
-            amount: 184.3,
-            balance: "Current Balance",
-        },
-    ],
-};
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { userPost } from "../redux/slices/userSlice";
+import EditNameForm from "../components/EditForm/EditForm";
 
 const User = () => {
-    const formatAmount = (amount) => {
-        const parts = amount.toFixed(2).split("."); // Séparer les parties entière et décimale
-        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Ajouter la virgule pour la séparation des milliers
-        return parts.join("."); // Joindre les parties entière et décimale
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const userName = useSelector((state) => state.user.userName);
+    const token = JSON.parse(localStorage.getItem("token"));
+
+    const [toggleEditForm, setToggleEditForm] = useState(false);
+
+    useEffect(() => {
+        if (!token) {
+            navigate("/user/signin");
+            return;
+        }
+        dispatch(userPost({ token }));
+    }, [token, navigate, dispatch]);
+
+    const toggleEdit = () => {
+        if (token) {
+            setToggleEditForm((current) => !current);
+        }
     };
 
     return (
         <Layout>
             <section className="bankAccounts">
-                <h1>
-                    Welcome back <br />
-                    {`${userData.firstName}`}!
-                </h1>
-                <button>Edit name</button>
-                {userData.accounts.map((account, idx) => (
-                    <BankAccountCard
-                        key={idx}
-                        title={account.title}
-                        amount={formatAmount(account.amount)}
-                        balance={account.balance}
+                {toggleEditForm ? (
+                    <EditNameForm
+                        onClickToggleCancel={toggleEdit}
+                        onClickToggleSave={toggleEdit}
                     />
-                ))}
+                ) : (
+                    <>
+                        <h1>
+                            Welcome back <br />
+                            {`${userName}`}!
+                        </h1>
+                        <button onClick={toggleEdit}>Edit name</button>
+                        <BankAccountCard
+                            title="Argent Bank Checking (x8349)"
+                            amount="2,082.79"
+                            balance="Available Balance"
+                        />
+                        <BankAccountCard
+                            title="Argent Bank Savings (x6712)"
+                            amount="10,928.42"
+                            balance="Available Balance"
+                        />
+                        <BankAccountCard
+                            title="Argent Bank Credit Card (x8349)"
+                            amount="184.30"
+                            balance="Current Balance"
+                        />
+                    </>
+                )}
             </section>
         </Layout>
     );

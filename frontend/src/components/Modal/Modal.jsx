@@ -1,12 +1,27 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Field from "./Field";
 import styles from "./modal.module.css";
 import profilIcon from "/img/profil-icon.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { signInUser } from "../../redux/slices/loginSlice";
 
 const Modal = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [checked, setChecked] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const token = JSON.parse(localStorage.getItem("token"));
+
+    const login = useSelector((state) => state.signin.login);
+
+    useEffect(() => {
+        if (login && token) {
+            navigate("/user");
+        }
+    }, [dispatch, login, token, navigate]);
 
     const handleEmail = (e) => {
         setEmail(e.target.value);
@@ -15,8 +30,16 @@ const Modal = () => {
         setPassword(e.target.value);
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+        if (email !== "" && password !== "") {
+            dispatch(signInUser({ email, password }));
+            return;
+        }
+    };
+
+    const toggleChecked = () => {
+        setChecked((state) => !state);
     };
 
     return (
@@ -42,14 +65,16 @@ const Modal = () => {
                         classname={styles.field}
                     />
                     <div className={styles.remember}>
-                        <input type="checkbox" id="remember" />
+                        <input
+                            type="checkbox"
+                            id="remember"
+                            defaultChecked={checked}
+                            onChange={toggleChecked}
+                        />
                         <label htmlFor="remember">Remember me</label>
                     </div>
                     <button type="submit">Sign In</button>
                 </form>
-                <Link to={"/user"} target="_top">
-                    Letsgo
-                </Link>
             </div>
         </section>
     );

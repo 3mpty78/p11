@@ -3,8 +3,18 @@ import Banner from "../components/Banner/Banner";
 import FeatureCard from "../components/Features/FeatureCard";
 import data from "/src/featuresData.json";
 import Layout from "../components/Layout";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { userPost } from "../redux/slices/userSlice";
 
 function Homepage() {
+    const dispatch = useDispatch();
+    const token = JSON.parse(localStorage.getItem("token"));
+    useEffect(() => {
+        if (token) {
+            dispatch(userPost({ token }));
+        }
+    }, [token, dispatch]);
     return (
         <>
             <Layout>
