@@ -49,6 +49,11 @@
                     border: 1px solid
                         light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
                     height: 34px;
+
+                    &:disabled {
+                        background-color: #12002b50;
+                        cursor: not-allowed;
+                    }
                 }
             }
 

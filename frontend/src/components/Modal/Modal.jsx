@@ -1,19 +1,24 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signInUser } from "../../redux/slices/loginSlice";
+import { signUpUser } from "../../redux/slices/signupSlice";
 import Field from "./Field";
 import styles from "./modal.module.css";
 import profilIcon from "/img/profil-icon.svg";
 
-const Modal = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+const Modal = ({ signInOrSignUp, token }) => {
+    const [form, setForm] = useState({
+        email: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        userName: "",
+    });
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const token = JSON.parse(localStorage.getItem("token"));
 
     const login = useSelector((state) => state.signin.login);
 
@@ -21,20 +26,43 @@ const Modal = () => {
         if (login && token) {
             navigate("/user");
         }
-    }, [dispatch, login, token, navigate]);
+    }, [login, token, navigate]);
 
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
-    };
-    const handlePassword = (e) => {
-        setPassword(e.target.value);
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setForm((prevForm) => ({
+            ...prevForm,
+            [name]: value,
+        }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSignIn = (e) => {
         e.preventDefault();
-        if (email !== "" && password !== "") {
-            dispatch(signInUser({ email, password }));
-            return;
+        const { email, password } = form;
+        try {
+            if (!email || !password) {
+                alert("Tout les champs sont requis !");
+            } else {
+                dispatch(signInUser({ email, password }));
+            }
+        } catch (error) {
+            console.error(
+                "Erreur lors de la connexion de l'utilisateur : ",
+                error
+            );
+        }
+    };
+
+    const handleSignUp = (e) => {
+        e.preventDefault();
+        if (
+            form.email &&
+            form.password &&
+            form.firstName &&
+            form.lastName &&
+            form.userName
+        ) {
+            dispatch(signUpUser(form));
         }
     };
 
@@ -47,33 +75,88 @@ const Modal = () => {
             <div className={styles.modal}>
                 <div className={styles.heading}>
                     <img src={profilIcon} alt="Profil icon" />
-                    <h2>Sign In</h2>
+                    <h2>
+                        {signInOrSignUp === "signin" ? "Sign In" : "Sign Up"}
+                    </h2>
                 </div>
-                <form onSubmit={handleSubmit}>
+                <form
+                    onSubmit={
+                        signInOrSignUp === "signin"
+                            ? handleSignIn
+                            : handleSignUp
+                    }>
                     <Field
-                        type={"email"}
-                        title={"email"}
-                        value={email}
-                        onChange={handleEmail}
+                        type="email"
+                        title="Email"
+                        name="email"
+                        value={form.email}
+                        onChange={handleInputChange}
                         classname={styles.field}
                     />
                     <Field
-                        type={"password"}
-                        title={"password"}
-                        value={password}
-                        onChange={handlePassword}
+                        type="password"
+                        title="Password"
+                        name="password"
+                        value={form.password}
+                        onChange={handleInputChange}
                         classname={styles.field}
                     />
-                    <div className={styles.remember}>
-                        <input
-                            type="checkbox"
-                            id="remember"
-                            defaultChecked={checked}
-                            onChange={toggleChecked}
-                        />
-                        <label htmlFor="remember">Remember me</label>
-                    </div>
-                    <button type="submit">Sign In</button>
+                    {signInOrSignUp === "signin" ? (
+                        <>
+                            <div className={styles.remember}>
+                                <input
+                                    type="checkbox"
+                                    id="remember"
+                                    checked={checked}
+                                    onChange={toggleChecked}
+                                />
+                                <label htmlFor="remember">Remember me</label>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <Field
+                                type="text"
+                                title="First Name"
+                                name="firstName"
+                                value={form.firstName}
+                                onChange={handleInputChange}
+                                classname={styles.field}
+                            />
+                            <Field
+                                type="text"
+                                title="Last Name"
+                                name="lastName"
+                                value={form.lastName}
+                                onChange={handleInputChange}
+                                classname={styles.field}
+                            />
+                            <Field
+                                type="text"
+                                title="Username"
+                                name="userName"
+                                value={form.userName}
+                                onChange={handleInputChange}
+                                classname={styles.field}
+                            />
+                        </>
+                    )}
+                    <button type="submit">
+                        {signInOrSignUp === "signin" ? "Sign In" : "Sign Up"}
+                    </button>
+                    <p>or</p>
+                    <button
+                        style={{
+                            backgroundColor: "#12002b",
+                        }}
+                        type="button"
+                        onClick={() =>
+                            signInOrSignUp === "signin"
+                                ? navigate("/sign-up")
+                                : navigate("/sign-in")
+                        }>
+                        {signInOrSignUp === "signin" ? "Sign Up" : "Sign In"}
+                    </button>
                 </form>
             </div>
         </section>

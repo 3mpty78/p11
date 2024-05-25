@@ -10,22 +10,22 @@ import Field from "../Modal/Field";
 
 const EditNameForm = ({ onClickToggleCancel, onClickToggleSave }) => {
     const dispatch = useDispatch();
-
     const user = useSelector((state) => state.user.userName);
-    // const firstName = useSelector((state) => state.user.firstName);
-    // const lastName = useSelector((state) => state.user.lastName);
+    const firstName = useSelector((state) => state.user.firstName);
+    const lastName = useSelector((state) => state.user.lastName);
     const token = JSON.parse(localStorage.getItem("token"));
-
     const [userName, setUserName] = useState("");
 
     useEffect(() => {
         setUserName(user);
     }, [user]);
 
-    const SaveUserName = (e) => {
+    const saveUsername = (e) => {
         e.preventDefault();
-        dispatch(userUpdate({ token, userName }));
-        dispatch(userPost({ token }));
+        if (token) {
+            dispatch(userUpdate({ token, userName }));
+            dispatch(userPost({ token }));
+        }
     };
 
     return (
@@ -45,23 +45,22 @@ const EditNameForm = ({ onClickToggleCancel, onClickToggleSave }) => {
                             classname={styles.field}
                             onChange={(e) => setUserName(e.target.value)}
                         />
-                        {/* <div className={styles.input}>
-                        <label htmlFor="firstName">First name : </label>
-                        <input
-                            id="firstName"
-                            type="text"
+                        <Field
+                            title="firstName"
                             value={firstName}
-                            disabled></input>
-                    </div>
-                    <div className={styles.input}>
-                        <label htmlFor="lastName">Last name : </label>
-                        <input
-                            id="lastName"
                             type="text"
+                            classname={styles.field}
+                            onChange={() => {}}
+                        />
+                        <Field
+                            title="lastName"
                             value={lastName}
-                            disabled></input>
-                    </div> */}
-                        <div className={styles.button} onClick={SaveUserName}>
+                            type="text"
+                            classname={styles.field}
+                            onChange={() => {}}
+                        />
+
+                        <div className={styles.button} onClick={saveUsername}>
                             <button onClick={onClickToggleSave}>Save</button>
                         </div>
                         <div className={styles.button}>

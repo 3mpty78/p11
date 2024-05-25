@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const USER_URL = "http://localhost:3001/api/v1/user";
 
@@ -12,15 +11,18 @@ export const userUpdate = createAsyncThunk(
                     "Content-Type": "application/json; charset=utf-8",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({
-                    userName: userName,
-                }),
+                body: JSON.stringify({ userName }),
             });
+
+            if (!response.ok) {
+                throw new Error("Failed to update user");
+            }
+
             const data = await response.json();
-            console.log("user succesfully updated : ", data.body.userName);
-            return data;
+            console.log("User successfully updated:", data.body.userName);
+            return data.body;
         } catch (error) {
-            console.log("Failed to update user");
+            console.error("Failed to update user:", error);
             return rejectWithValue(error.message);
         }
     }
@@ -29,6 +31,7 @@ export const userUpdate = createAsyncThunk(
 const initialState = {
     status: "void",
     error: null,
+    user: null,
 };
 
 const userUpdateSlice = createSlice({
@@ -42,6 +45,7 @@ const userUpdateSlice = createSlice({
             .addCase(userUpdate.fulfilled, (state, action) => {
                 state.status = "fulfilled";
                 state.error = null;
+                state.user = action.payload; // Update the state with the new user data
             })
             .addCase(userUpdate.rejected, (state, action) => {
                 state.status = "rejected";

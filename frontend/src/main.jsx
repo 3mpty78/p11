@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/sign-up",
-        element: <SignIn />,
+        element: <SignUp />,
     },
     {
         path: "/user",
@@ -30,6 +30,7 @@ const router = createBrowserRouter([
 
 // REDUX
 import { store } from "./store.js";
+import SignUp from "./pages/SignUp.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
