@@ -9,6 +9,7 @@ const Field = ({ title, value, onChange, type, classname, name }) => {
                 type={type}
                 value={value}
                 onChange={onChange}
+                required
             />
         </div>
     );

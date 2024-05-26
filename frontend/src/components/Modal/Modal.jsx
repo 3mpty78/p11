@@ -8,7 +8,8 @@ import Field from "./Field";
 import styles from "./modal.module.css";
 import profilIcon from "/img/profil-icon.svg";
 
-const Modal = ({ signInOrSignUp, token }) => {
+const Modal = ({ signInOrSignUp }) => {
+    // LOCAL STATES
     const [form, setForm] = useState({
         email: "",
         password: "",
@@ -17,10 +18,14 @@ const Modal = ({ signInOrSignUp, token }) => {
         userName: "",
     });
     const [checked, setChecked] = useState(false);
+
+    // REDUX
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const login = useSelector((state) => state.signin.login);
+
+    // TOKEN
+    const token = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {
         if (login && token) {
@@ -39,29 +44,24 @@ const Modal = ({ signInOrSignUp, token }) => {
     const handleSignIn = (e) => {
         e.preventDefault();
         const { email, password } = form;
-        try {
-            if (!email || !password) {
-                alert("Tout les champs sont requis !");
-            } else {
-                dispatch(signInUser({ email, password }));
-            }
-        } catch (error) {
-            console.error(
-                "Erreur lors de la connexion de l'utilisateur : ",
-                error
-            );
+        if (!email || !password) {
+            alert("Tout les champs sont requis !");
+        } else {
+            dispatch(signInUser({ email, password }));
         }
     };
 
     const handleSignUp = (e) => {
         e.preventDefault();
         if (
-            form.email &&
-            form.password &&
-            form.firstName &&
-            form.lastName &&
-            form.userName
+            !form.email ||
+            !form.password ||
+            !form.firstName ||
+            !form.lastName ||
+            !form.userName
         ) {
+            alert("Tout les champs sont requis !");
+        } else {
             dispatch(signUpUser(form));
         }
     };

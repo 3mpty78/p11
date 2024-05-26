@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
-import styles from "./navbar.module.css";
-
-import logo from "../../../../designs/img/argentBankLogo.png";
-import profilIcon from "../../../../designs/img/profil-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/loginSlice";
+import styles from "./navbar.module.css";
+
+import logo from "/img/argentBankLogo.png";
+import profilIcon from "/img/profil-icon.svg";
+import logoutIcon from "/img/logout.svg";
 
 const Navbar = () => {
     const dispatch = useDispatch();
@@ -36,8 +37,8 @@ const Navbar = () => {
                             target="_top"
                             onClick={() => dispatch(logout())}>
                             <img
-                                className={styles.profil}
-                                src={profilIcon}
+                                className={styles.logout}
+                                src={logoutIcon}
                                 alt="Profil Icon"
                             />
                             <p>Sign Out</p>

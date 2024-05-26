@@ -28,8 +28,12 @@
         }
 
         img.profil {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
+        }
+        img.logout {
+            width: 26px;
+            height: 26px;
         }
     }
 }

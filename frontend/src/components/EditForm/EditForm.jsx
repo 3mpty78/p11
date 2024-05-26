@@ -66,8 +66,8 @@ const EditNameForm = ({ onClickToggleCancel, onClickToggleSave }) => {
                         <div className={styles.button}>
                             <button
                                 style={{
-                                    backgroundColor: "#c40000",
-                                    borderColor: "#c40000",
+                                    backgroundColor: "#12002b",
+                                    borderColor: "#12002b",
                                 }}
                                 onClick={onClickToggleCancel}>
                                 Cancel
