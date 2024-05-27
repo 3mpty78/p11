@@ -63,6 +63,10 @@
                 align-items: center;
             }
 
+            p {
+                margin: 0 auto;
+            }
+
             button {
                 width: 100%;
                 padding: 8px;

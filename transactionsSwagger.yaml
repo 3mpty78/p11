@@ -1,20 +1,54 @@
 openapi: 3.0.1
 info:
-    title: API de Gestion des Transactions Bancaires
-    description: Cette API permet de gérer les transactions bancaires.
+    title: Argent Bank transactions API documentation
+    description: API endpoints to manage user transactions
     version: 1.0.0
 servers:
-    - url: http://localhost:3000/api
-
+    - url: http://localhost:3001/api/v1
+components:
+    securitySchemes:
+        BearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+    schemas:
+        Transaction:
+            type: object
+            properties:
+                id:
+                    type: string
+                    description: Transaction ID
+                    example: "123456"
+                amount:
+                    type: number
+                    description: Transaction amount
+                    example: 150.00
+                date:
+                    type: string
+                    format: date
+                    description: Transaction date
+                    example: "2024-05-23"
+                accountName:
+                    type: string
+                    description: Account for the transaction
+                    example: "CB"
+                description:
+                    type: string
+                    description: Transaction description
+                    example: "Coffee"
+security:
+    - BearerAuth: []
 paths:
     /transactions/current-month:
         get:
             tags:
-                - Transactions
-            summary: Visualiser toutes les transactions du mois en cours
+                - View Transactions
+            summary: Visualize current month transactions
+            security:
+                - BearerAuth: []
             responses:
                 "200":
-                    description: Liste des transactions du mois en cours
+                    description: List of current month transactions
                     content:
                         application/json:
                             schema:
@@ -25,39 +59,43 @@ paths:
     /transactions/{id}:
         get:
             tags:
-                - Transactions
-            summary: Voir les détails d'une transaction
+                - View Transactions
+            summary: Visualize transaction details
+            security:
+                - BearerAuth: []
             parameters:
                 - name: id
                   in: path
                   required: true
                   schema:
                       type: string
-                  description: ID de la transaction
+                  description: Transaction ID
             responses:
                 "200":
-                    description: Détails de la transaction
+                    description: Transaction details
                     content:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Transaction"
                 "404":
-                    description: Transaction non trouvée
+                    description: Transaction not found
 
     /transactions/{id}/update-account-name:
         patch:
             tags:
-                - Transactions
-            summary: Modifier le nom du compte associé à une transaction
+                - Update Transactions
+            summary: Update transaction account name
+            security:
+                - BearerAuth: []
             parameters:
                 - name: id
                   in: path
                   required: true
                   schema:
                       type: string
-                  description: ID de la transaction
+                  description: Transaction ID
             requestBody:
-                description: Nouveau nom de compte
+                description: New account name
                 required: true
                 content:
                     application/json:
@@ -69,28 +107,30 @@ paths:
                                     example: "CB"
             responses:
                 "200":
-                    description: Nom du compte mis à jour
+                    description: Account name updated
                     content:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Transaction"
                 "404":
-                    description: Transaction non trouvée
+                    description: Transaction not found
 
     /transactions/{id}/add-description:
         patch:
             tags:
-                - Transactions
-            summary: Ajouter une description à une transaction
+                - Update Transactions
+            summary: Add a description to a transaction
+            security:
+                - BearerAuth: []
             parameters:
                 - name: id
                   in: path
                   required: true
                   schema:
                       type: string
-                  description: ID de la transaction
+                  description: Transaction ID
             requestBody:
-                description: Nouvelle description
+                description: New description
                 required: true
                 content:
                     application/json:
@@ -99,40 +139,13 @@ paths:
                             properties:
                                 description:
                                     type: string
-                                    example: "Achat de matériel de bureau"
+                                    example: "Coffee"
             responses:
                 "200":
-                    description: Description ajoutée
+                    description: Description added
                     content:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Transaction"
                 "404":
-                    description: Transaction non trouvée
-
-components:
-    schemas:
-        Transaction:
-            type: object
-            properties:
-                id:
-                    type: string
-                    description: ID de la transaction
-                    example: "123456"
-                amount:
-                    type: number
-                    description: Montant de la transaction
-                    example: 150.00
-                date:
-                    type: string
-                    format: date
-                    description: Date de la transaction
-                    example: "2024-05-23"
-                accountName:
-                    type: string
-                    description: Nom du compte associé à la transaction
-                    example: "CB"
-                description:
-                    type: string
-                    description: Description de la transaction
-                    example: "Achat de matériel de bureau"
+                    description: Transaction not found

@@ -9,12 +9,13 @@ import profilIcon from "/img/profil-icon.svg";
 import Field from "../Modal/Field";
 
 const EditNameForm = ({ onClickToggleCancel, onClickToggleSave }) => {
+    const [userName, setUserName] = useState("");
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.userName);
     const firstName = useSelector((state) => state.user.firstName);
     const lastName = useSelector((state) => state.user.lastName);
+
     const token = JSON.parse(localStorage.getItem("token"));
-    const [userName, setUserName] = useState("");
 
     useEffect(() => {
         setUserName(user);
@@ -50,14 +51,14 @@ const EditNameForm = ({ onClickToggleCancel, onClickToggleSave }) => {
                             value={firstName}
                             type="text"
                             classname={styles.field}
-                            onChange={() => {}}
+                            disabled={true}
                         />
                         <Field
                             title="lastName"
                             value={lastName}
                             type="text"
                             classname={styles.field}
-                            onChange={() => {}}
+                            disabled={true}
                         />
 
                         <div className={styles.button} onClick={saveUsername}>
