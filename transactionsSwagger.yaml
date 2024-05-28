@@ -55,6 +55,8 @@ paths:
                                 type: array
                                 items:
                                     $ref: "#/components/schemas/Transaction"
+                "404":
+                    description: No transactions found
 
     /transactions/{id}:
         get:

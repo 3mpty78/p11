@@ -45,7 +45,7 @@ const userUpdateSlice = createSlice({
             .addCase(userUpdate.fulfilled, (state, action) => {
                 state.status = "fulfilled";
                 state.error = null;
-                state.user = action.payload; // Update the state with the new user data
+                state.user = action.payload;
             })
             .addCase(userUpdate.rejected, (state, action) => {
                 state.status = "rejected";
