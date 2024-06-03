@@ -3,7 +3,7 @@ const BankAccountCard = ({ title, amount, balance }) => {
     return (
         <div className="bankCard">
             <div>
-                <p>Argent Bank {title}</p>
+                <p>{title}</p>
                 <h2>${amount}</h2>
                 <p>{balance}</p>
             </div>

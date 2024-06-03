@@ -1,7 +1,7 @@
 .banner {
     width: 100%;
     height: 400px;
-    background: url("/img/bank-tree.jpeg") no-repeat center/cover;
+    background: url("/img/bank-tree.webp") no-repeat center/cover;
     background-position: 0% 33%;
     display: flex;
     align-items: center;

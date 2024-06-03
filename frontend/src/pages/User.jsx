@@ -17,11 +17,11 @@ const User = () => {
 
     useEffect(() => {
         if (!token) {
-            navigate("/user/signin");
+            navigate("/sign-in");
             return;
         }
         dispatch(userPost({ token }));
-    }, [token, navigate, dispatch]);
+    }, [token, navigate, dispatch, userName]);
 
     const toggleEdit = () => {
         if (token) {

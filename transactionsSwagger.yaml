@@ -28,6 +28,10 @@ components:
                     format: date
                     description: Transaction date
                     example: "2024-05-23"
+                balance:
+                    type: number
+                    description: Account balance after transaction
+                    example: 1000.00
                 accountName:
                     type: string
                     description: Account for the transaction
@@ -36,10 +40,22 @@ components:
                     type: string
                     description: Transaction description
                     example: "Coffee"
+                type:
+                    type: string
+                    description: Type of transaction
+                    example: "electronic"
+                category:
+                    type: string
+                    description: Category of the transaction
+                    example: "food"
+                note:
+                    type: string
+                    description: Transaction note
+                    example: "Déjeuner"
 security:
     - BearerAuth: []
 paths:
-    /transactions/current-month:
+    /transactions:
         get:
             tags:
                 - View Transactions
@@ -55,6 +71,10 @@ paths:
                                 type: array
                                 items:
                                     $ref: "#/components/schemas/Transaction"
+                "401":
+                    description: Unauthorized - Token missing or invalid
+                "403":
+                    description: Forbidden - Not allowed to access this resource
                 "404":
                     description: No transactions found
 
@@ -79,14 +99,18 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Transaction"
+                "401":
+                    description: Unauthorized - Token missing or invalid
+                "403":
+                    description: Forbidden - Not allowed to access this resource
                 "404":
                     description: Transaction not found
 
-    /transactions/{id}/update-account-name:
+    /transactions/{id}/update-category:
         patch:
             tags:
                 - Update Transactions
-            summary: Update transaction account name
+            summary: Update transaction category
             security:
                 - BearerAuth: []
             parameters:
@@ -97,31 +121,35 @@ paths:
                       type: string
                   description: Transaction ID
             requestBody:
-                description: New account name
+                description: New category
                 required: true
                 content:
                     application/json:
                         schema:
                             type: object
                             properties:
-                                accountName:
+                                category:
                                     type: string
-                                    example: "CB"
+                                    example: "entertainment"
             responses:
                 "200":
-                    description: Account name updated
+                    description: Category updated
                     content:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Transaction"
+                "401":
+                    description: Unauthorized - Token missing or invalid
+                "403":
+                    description: Forbidden - Not allowed to access this resource
                 "404":
                     description: Transaction not found
 
-    /transactions/{id}/add-description:
+    /transactions/{id}/update-note:
         patch:
             tags:
                 - Update Transactions
-            summary: Add a description to a transaction
+            summary: Update transaction note
             security:
                 - BearerAuth: []
             parameters:
@@ -132,22 +160,26 @@ paths:
                       type: string
                   description: Transaction ID
             requestBody:
-                description: New description
+                description: New note
                 required: true
                 content:
                     application/json:
                         schema:
                             type: object
                             properties:
-                                description:
+                                note:
                                     type: string
-                                    example: "Coffee"
+                                    example: "Business lunch"
             responses:
                 "200":
-                    description: Description added
+                    description: Note updated
                     content:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Transaction"
+                "401":
+                    description: Unauthorized - Token missing or invalid
+                "403":
+                    description: Forbidden - Not allowed to access this resource
                 "404":
                     description: Transaction not found

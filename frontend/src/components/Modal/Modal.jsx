@@ -9,6 +9,7 @@ import styles from "./modal.module.css";
 import profilIcon from "/img/profil-icon.svg";
 
 const Modal = ({ signInOrSignUp }) => {
+    const navigate = useNavigate();
     // LOCAL STATES
     const [form, setForm] = useState({
         email: "",
@@ -21,7 +22,6 @@ const Modal = ({ signInOrSignUp }) => {
 
     // REDUX
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const login = useSelector((state) => state.signin.login);
 
     // TOKEN
